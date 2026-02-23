@@ -23,11 +23,10 @@ function verifyShopifyWebhook(req, res, buf) {
 app.use(express.json({ verify: verifyShopifyWebhook }));
 
 app.post('/webhook', async (req, res) => {
+  const order = req.body;
   if (!order) {
     return res.sendStatus(404);
   }
-  const order = req.body;
-  
   console.log(JSON.stringify(order));
   const items = order?.line_items?.map(({ name, current_quantity }) => `${name} (${current_quantity}шт)`).join(', ');
   const recipient = order?.shipping_address ? `
