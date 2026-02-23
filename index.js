@@ -10,7 +10,8 @@ app.post('/webhook', async (req, res) => {
   console.log(order)
   const message = `
 🌷 Нове замовлення!
-Номер замовлення: #${order.order_number}
+Замовлення: #${order.order_number}
+Номер телефону замовника: ${order.customer?.phone}
 📦 Інформація про отримувача
 Ім'я: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
 Номер телефону: ${order.billing_address?.phone || 'не вказано'}
