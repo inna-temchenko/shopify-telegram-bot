@@ -13,10 +13,10 @@ app.post('/webhook', async (req, res) => {
 Замовлення: #${order.order_number}
 Номер телефону замовника: ${order.customer?.phone}
 📦 Інформація про отримувача
-Ім'я: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
-Номер телефону: ${order.billing_address?.phone || 'не вказано'}
-Адреса: ${order.billing_address?.city}, ${order.billing_address?.address1}
-Номер квартири: ${order.billing_address?.address2 || 'не вказано'}
+Ім'я: ${order.shipping_address?.first_name} ${order.shipping_address?.last_name}
+Номер телефону: ${order.shipping_address?.phone || 'не вказано'}
+Адреса: ${order.shipping_address?.city}, ${order.shipping_address?.address1}
+Номер квартири: ${order.shipping_address?.address2 || 'не вказано'}
 ======================
 Сума: ${order.total_price} ${order.currency}
   `;
