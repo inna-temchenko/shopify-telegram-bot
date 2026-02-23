@@ -1,21 +1,27 @@
 const express = require('express');
+const crypto = require('crypto');
+
 const app = express();
 app.use(express.json());
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
-const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || [];
+const SHOPIFY_SECRET = process.env.SHOPIFY_SECRET;
 
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (ALLOWED_ORIGINS.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+function verifyShopifyWebhook(req, res, buf) {
+  const hmac = req.headers['x-shopify-hmac-sha256'];
+  const digest = crypto
+    .createHmac('sha256', SHOPIFY_SECRET)
+    .update(buf)
+    .digest('base64');
+  
+  if (digest !== hmac) {
+    res.sendStatus(401);
+    throw new Error('Invalid webhook signature');
   }
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.sendStatus(204);
-  next();
-});
+}
+
+app.use(express.json({ verify: verifyShopifyWebhook }));
 
 app.post('/webhook', async (req, res) => {
   const order = req.body;
