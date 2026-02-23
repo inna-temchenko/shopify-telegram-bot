@@ -11,10 +11,13 @@ app.post('/webhook', async (req, res) => {
   const message = `
 🌷 Нове замовлення!
 Номер замовлення: #${order.order_number}
-Ім'я отримувача: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
-Телефон отримувача: ${order.billing_address?.phone || 'не вказано'}
+📦 Інформація про отримувача
+Ім'я: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
+Номер телефону: ${order.billing_address?.phone || 'не вказано'}
+Адреса: ${order.billing_address?.city}, ${order.billing_address?.address1}
+Номер квартири: ${order.billing_address?.address2 || 'не вказано'}
+======================
 Сума: ${order.total_price} ${order.currency}
-Місто: ${order.billing_address?.city}
   `;
 
   await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
