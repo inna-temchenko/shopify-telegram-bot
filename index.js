@@ -26,6 +26,7 @@ app.post('/webhook', async (req, res) => {
   res.sendStatus(200);
 });
 
+console.log(TELEGRAM_TOKEN,CHAT_ID)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
