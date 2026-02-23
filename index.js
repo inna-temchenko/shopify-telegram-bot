@@ -2,7 +2,6 @@ const express = require('express');
 const crypto = require('crypto');
 
 const app = express();
-app.use(express.json());
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
