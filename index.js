@@ -9,14 +9,13 @@ app.post('/webhook', async (req, res) => {
   const order = req.body;
   console.log(order)
   const recipient = order?.shipping_address ? `
-    📦 Інформація про отримувача
-    Ім'я: ${order.shipping_address?.first_name} ${order.shipping_address?.last_name}
-    Номер телефону: ${order.shipping_address?.phone || 'не вказано'}
-    Адреса: ${order.shipping_address?.city}, ${order.shipping_address?.address1}
-    Номер квартири: ${order.shipping_address?.address2 || 'не вказано'}
-    ======================
+  📦 Інформація про отримувача
+  Ім'я: ${order.shipping_address?.first_name} ${order.shipping_address?.last_name}
+  Номер телефону: ${order.shipping_address?.phone || 'не вказано'}
+  Адреса: ${order.shipping_address?.city}, ${order.shipping_address?.address1}
+  Номер квартири: ${order.shipping_address?.address2 || 'не вказано'}
   ` : '';
-  const deliveryInfo = order.shipping_lines.code === 'Local Delivery' ? "Доставка" : order.shipping_lines.code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
+  const deliveryInfo = order.shipping_lines[0].code === 'Local Delivery' ? "Доставка" : order.shipping_lines[0].code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
   
   const message = `
 🌷 Нове замовлення!
