@@ -7,7 +7,7 @@ const CHAT_ID = process.env.CHAT_ID;
 
 app.post('/webhook', async (req, res) => {
   const order = req.body;
-  console.log(order)
+  console.log(JSON.stringify(order));
   const recipient = order?.shipping_address ? `
   📦 Інформація про отримувача
   Ім'я: ${order.shipping_address?.first_name} ${order.shipping_address?.last_name}
@@ -19,7 +19,7 @@ app.post('/webhook', async (req, res) => {
   Ім'я: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
   Номер телефону: ${order.billing_address?.phone || 'не вказано'}
   `;
-  const deliveryInfo = order.shipping_lines[0].code === 'Local Delivery' ? "Доставка" : order.shipping_lines[0].code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
+  const deliveryInfo = order.shipping_lines[0].code === 'Local Delivery' ? "Доставка кур'єром" : order.shipping_lines[0].code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
  
   const message = `
 🌷 Нове замовлення!
