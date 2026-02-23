@@ -37,8 +37,7 @@ app.post('/webhook', async (req, res) => {
       : 
   `
   Ім'я: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
-  Номер телефону: ${order.billing_address?.phone || 'не вказано'}
-  `;
+  Номер телефону: ${order.billing_address?.phone || 'не вказано'}`;
   const deliveryInfo = order.shipping_lines[0].code === 'Local Delivery' ? "Доставка кур'єром" : order.shipping_lines[0].code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
   
   const message = `
