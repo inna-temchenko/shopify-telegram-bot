@@ -8,6 +8,9 @@ const CHAT_ID = process.env.CHAT_ID;
 app.post('/webhook', async (req, res) => {
   const order = req.body;
   console.log(JSON.stringify(order));
+  const items = order?.line_items?.reduce((msg, value, index) => {
+    return msg += value.name + index < order.line_items.length ? ', ' : '';
+  }, null);
   const recipient = order?.shipping_address ? `
   📦 Інформація про отримувача
   Ім'я: ${order.shipping_address?.first_name} ${order.shipping_address?.last_name}
@@ -27,6 +30,7 @@ app.post('/webhook', async (req, res) => {
 Номер телефону замовника: ${order.customer?.phone}
 ${recipient}
 Тип доставки: ${deliveryInfo}
+Товари: ${items}
 Сума: ${order.total_price} ${order.currency}
   `;
 
