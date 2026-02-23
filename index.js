@@ -472,7 +472,9 @@ app.post('/webhook', async (req, res) => {
 🌷 Нове замовлення!
 Замовлення: #${order.order_number}
 Номер телефону замовника: ${order.customer?.phone}
+  
   📦 Інформація про отримувача ${recipient}
+  
 Тип доставки: ${deliveryInfo}
 Товари: ${items}
 Сума: ${order.total_price} ${order.currency}
