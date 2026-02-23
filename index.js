@@ -14,9 +14,13 @@ app.post('/webhook', async (req, res) => {
   Номер телефону: ${order.shipping_address?.phone || 'не вказано'}
   Адреса: ${order.shipping_address?.city}, ${order.shipping_address?.address1}
   Номер квартири: ${order.shipping_address?.address2 || 'не вказано'}
-  ` : '';
+  ` : `
+  📦 Інформація про отримувача
+  Ім'я: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
+  Номер телефону: ${order.billing_address?.phone || 'не вказано'}
+  `;
   const deliveryInfo = order.shipping_lines[0].code === 'Local Delivery' ? "Доставка" : order.shipping_lines[0].code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
-  
+ 
   const message = `
 🌷 Нове замовлення!
 Замовлення: #${order.order_number}
