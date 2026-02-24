@@ -23,6 +23,9 @@ function verifyShopifyWebhook(req, res, buf) {
 app.use(express.json({ verify: verifyShopifyWebhook }));
 
 app.post('/webhook', async (req, res) => {
+  console.log('=== WEBHOOK HEADERS ===', JSON.stringify(req.headers, null, 2));
+  console.log('=== WEBHOOK BODY ===', JSON.stringify(req.body, null, 2));
+  
   const order = req.body;
   if (!order || !order.id) {
     return res.sendStatus(404);
