@@ -23,6 +23,7 @@ function verifyShopifyWebhook(req, res, buf) {
 app.use(express.json({ verify: verifyShopifyWebhook }));
 
 app.get('/ping', (req, res) => {
+  console.log('ping')
   res.sendStatus(200);
 });
 
