@@ -49,7 +49,7 @@ app.post('/webhook', async (req, res) => {
   const deliveryInfo = order.shipping_lines[0].code === 'Local Delivery' ? "Доставка кур'єром" : order.shipping_lines[0].code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
   
   const message = `
-🌷 Нове замовлення #${order.order_number}!
+🌷 Нове замовлення #${order.order_number}
 Номер телефону замовника: ${order.customer?.phone}
   
   📦 Інформація про отримувача ${recipient}
