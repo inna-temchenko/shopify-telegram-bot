@@ -60,14 +60,14 @@ app.post('/webhook', async (req, res) => {
 Сума: ${order.total_price} ${order.currency}
   `;
 
-  await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+  const request = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: CHAT_ID, text: message })
   });
 
-  const data = await res.json();
-  console.log(res.status, data);
+  const data = await request.json();
+  console.log(request.status, data);
 
   res.sendStatus(200);
 });
