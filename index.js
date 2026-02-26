@@ -29,7 +29,6 @@ app.get('/ping', (req, res) => {
 
 app.post('/webhook', async (req, res) => {
   console.log('=== WEBHOOK HEADERS ===', JSON.stringify(req.headers, null, 2));
-  console.log('=== WEBHOOK BODY ===', JSON.stringify(req.body, null, 2));
   
   const order = req.body;
   if (!order || !order.id) {
@@ -46,7 +45,7 @@ app.post('/webhook', async (req, res) => {
   `
   Ім'я: ${order.billing_address?.first_name} ${order.billing_address?.last_name}
   Номер телефону: ${order.billing_address?.phone || 'не вказано'}`;
-  const deliveryInfo = order.shipping_lines[0].code === 'Local Delivery' ? "Доставка кур'єром" : order.shipping_lines[0].code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
+  const deliveryInfo = order.shipping_lines[0]?.code === 'Local Delivery' ? "Доставка кур'єром" : order.shipping_lines[0]?.code === 'Freesia' ? 'Самовивіз' : 'Не вказано';
   
   const message = `
 🌷 Нове замовлення #${order.order_number}
