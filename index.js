@@ -28,13 +28,14 @@ app.get('/ping', (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
-  console.log('=== WEBHOOK HEADERS ===', JSON.stringify(req.headers, null, 2));
+  console.log('=== WEBHOOK HEADERS ===', JSON.stringify(req.headers));
+  console.log('=== WEBHOOK BODY ===', JSON.stringify(req.body));
   
   const order = req.body;
   if (!order || !order.id) {
     return res.sendStatus(404);
   }
-  console.log(JSON.stringify(order));
+  
   const items = order?.line_items?.map(({ name, current_quantity }) => `${name} (${current_quantity}шт)`).join(', ');
   const recipient = order?.shipping_address ? `
   Ім'я: ${order.shipping_address?.first_name} ${order.shipping_address?.last_name}
